@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar color="bordas">
+    <ion-title text-center>Atividade</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <img src="img/imgexemple.jpg">
+    <ion-card-content>
+      <ion-card-title>pet.Nome</ion-card-title>
+      <p> Perca de gordura </p>
+      <ion-list *ngIf="time">
+        <ion-item>
+          <label>Descrição: </label><label>Algo</label>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+  <ion-fab bottom right>
+    <button ion-fab color="verde">
+      <ion-icon ios="ios-create" md="md-create" color="light"></ion-icon>
+    </button>
+  <ion-fab-list side="top">
+
+      <button ion-fab>
+        <ion-icon name="logo-youtube" color="verde"></ion-icon>
+        <div class ="label">youtube</div>
+      </button>
+  <button ion-fab>
+    <ion-icon name="logo-twitter" color="verde"></ion-icon>
+    <div class ="label">twitter</div>
+  </button>
+  <button ion-fab>
+    <ion-icon name="log-in" color="verde"></ion-icon>
+    <div class ="label">Create Movement</div>
+  </button>
+  </ion-fab-list>
+ </ion-fab>
+
+</ion-content>

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar color="bordas">
+    <ion-title text-center>Atividades</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment color="bordas" >
+    <ion-segment-button (click)="exerUser()" value="kittens">
+      Seu Treino
+    </ion-segment-button>
+    <ion-segment-button (click)="outros()" value="puppies">
+      Outros Exercicios
+    </ion-segment-button>
+  </ion-segment>
+  <div>
+      <ion-list >
+          <div *ngIf="exer != null; then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock>
+              <button ion-item *ngFor="let exc of exer" name="BtnExer" (click)="openExer(exc)">
+            
+                <ion-avatar item-start>
+                    <img src="{{exc.IMG}}">
+                  </ion-avatar>
+                  <ion-label>
+                      <h2>{{exc.nome}}</h2>
+                  </ion-label>
+            
+              </button>
+          </ng-template>
+          <ng-template #elseBlock>
+              <label text-center>
+                  <h3>Não há exercicios catalogados</h3>
+              </label>
+          </ng-template>
+        </ion-list>
+  </div>
+  
+</ion-content>

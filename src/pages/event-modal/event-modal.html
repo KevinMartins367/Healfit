@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar color="bordas">
+    <ion-buttons end>
+      <button ion-button icon-only (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Adicionar Evento</ion-title>
+  </ion-navbar>
+</ion-header>
+ 
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-input type="text" placeholder="Titulo" [(ngModel)]="event.title"></ion-input>
+    </ion-item>
+ 
+    <ion-item>
+      <ion-label>Inicio</ion-label>
+      <ion-datetime color="bordas" displayFormat="DD/MM/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.startTime" [min]="minDate"
+      cancelText="Cancelar"
+      doneText="Concluir"></ion-datetime>
+    </ion-item>
+ 
+    <ion-item>
+      <ion-label>Fim</ion-label>
+      <ion-datetime color="bordas" displayFormat="DD/MM/YYYY HH:mm" pickerFormat="MMM D:HH:mm" [(ngModel)]="event.endTime" [min]="event.startTime"
+      cancelText="Cancelar"
+      doneText="Concluir"></ion-datetime>
+    </ion-item>
+ 
+    <ion-item>
+      <ion-label>Dia inteiro?</ion-label>
+      <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+ 
+  <div>
+    <button color="bordas" ion-button block round (click)="save()">
+      Concluir
+    </button>
+  </div>
+  
+</ion-content>

@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar color="bordas">
+    <ion-title text-center>Atividade</ion-title>
+    <ion-buttons end>
+      <a ion-button icon-only class='arm'></a>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card *ngFor="let e of exer">
+    <img src="{{e.IMG}}">
+    <ion-card-content>
+      <ion-card-title text-center >{{e.nome}}</ion-card-title>
+      <p text-center> Perca de gordura </p>
+      <ion-list *ngIf="time">
+        <ion-item class="no-bottom-border item">
+            <button ion-button *ngIf="timeInSeconds && timeInSeconds > 0" large full clear color="bordas" class="timer-button timer-text">{{time.displayTime}}</button>
+        </ion-item>
+        <ion-item class="no-bottom-border" *ngIf="timeInSeconds && timeInSeconds > 0">
+            <button ion-button icon-left clear color="danger" small (click)="initTimer()" name="BtnRein" item-left *ngIf="!time.runTimer && (time.hasStarted || time.hasFinished) || time.hasFinished">
+                <ion-icon ios="ios-refresh" md="md-refresh"></ion-icon>
+                Reiniciar
+            </button>
+            <button ion-button icon-left clear small color="bordas" (click)="pauseTimer()" name="BtnPause" item-right *ngIf="time.runTimer && time.hasStarted && !time.hasFinished">
+                <ion-icon ios="ios-pause" md="md-pause"></ion-icon>
+                Pausar
+            </button>
+            <button ion-button icon-left clear small color="bordas" (click)="resumeTimer()" name="BtnRet" item-right *ngIf="!time.runTimer && time.hasStarted && !time.hasFinished">
+                <ion-icon ios="ios-play" md="md-play"></ion-icon>
+                Retornar
+            </button>
+            <button ion-button icon-left clear small color="bordas" (click)="startTimer()" name="BtnStart" item-right *ngIf="!time.hasStarted">
+                <ion-icon ios="ios-play" md="md-play"></ion-icon>
+                Iniciar
+            </button>
+        </ion-item>
+        <ion-item>
+          <label class="texto2">Descrição: {{e.descricao}}</label>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+  <ion-fab bottom right>
+    <button ion-fab color="bordas">
+      <ion-icon ios="logo-youtube" md="logo-youtube"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

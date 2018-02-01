@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-navbar color="bordas">
+    <ion-title text-center>Config</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <button ion-item block *ngFor="let p of pages" (click)="openPage(p)">
+      {{p.title}}
+      <ion-icon item-start color="bordas" ios="ios-{{p.icons}}" md="md-{{p.icons}}"></ion-icon>
+  </button>
+</ion-content>

@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar color="bordas">
+    <ion-title text-center>Notifications</ion-title>
+    <ion-buttons end>
+      <a ion-button icon-only><ion-icon color="bordas" ios="ios-speedometer" md="md-speedometer"></ion-icon></a>
+      <a ion-button icon-only><ion-icon color="bordas" ios="ios-speedometer" md="md-speedometer"></ion-icon></a>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-item>
+        <ion-label>Horario</ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="teste"
+        cancelText="Cancelar"   
+        doneText="Concluir" 
+        ></ion-datetime>
+      </ion-item>
+
+      <button color="bordas" ion-button block round (click)="save()">Concluir</button>
+</ion-content>
