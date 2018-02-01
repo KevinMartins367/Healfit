@@ -6,14 +6,13 @@
 
 
 <ion-content padding>
-  <ion-card>
-    <img src="img/imgexemple.jpg">
+  <ion-card *ngFor="let e of exer">
+    <img src="{{e.IMG}}">
     <ion-card-content>
-      <ion-card-title>pet.Nome</ion-card-title>
-      <p> Perca de gordura </p>
-      <ion-list *ngIf="time">
+      <ion-card-title>{{e.nome}}</ion-card-title>
+      <ion-list >
         <ion-item>
-          <label>Descrição: </label><label>Algo</label>
+          <label class="texto2">Descrição: {{e.descricao}}</label>
         </ion-item>
       </ion-list>
 

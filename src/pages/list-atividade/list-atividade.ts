@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormControl } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
+
+import { ToastProvider } from '../../providers/toast/toast';
 
 import { AtividadePage } from '../atividade/atividade';
+import { AtividadeGenericaPage } from '../atividade_Generica/atividade_Generica';
 import { LoadProvider } from '../../providers/load/load';
 import { ExercicioDaoProvider } from '../../providers/exercicio-dao/exercicio-dao';
 import { Exercicio } from '../../providers/exercicio-local/exercicio-local';
-import { Cliente } from '../../providers/cliente-local/cliente-local';
-import { ClienteDaoProvider } from  '../../providers/cliente-dao/cliente-dao';
-import { ToastProvider } from '../../providers/toast/toast';
+import { SeutreinoDaoProvider } from '../../providers/seutreino-dao/seutreino-dao';
+import { TreinoDaoProvider } from '../../providers/treino-dao/treino-dao';
 
 @IonicPage()
 @Component({
@@ -16,19 +20,28 @@ import { ToastProvider } from '../../providers/toast/toast';
 })
 export class ListAtividadePage {
 
-  exer: Exercicio[];
-  pack_Exc: Array<any>;
+  exer = {itens: []};
+  searchControl: FormControl;
+  name:  string = '';
+  categories: string = 'treino';
+  searching: any = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private lp: LoadProvider, public exerp: ExercicioDaoProvider,
-              public tp: ToastProvider, public clip: ClienteDaoProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private lp: LoadProvider, 
+    public exerp: ExercicioDaoProvider, public toastCtrl: ToastProvider, public stp: SeutreinoDaoProvider,
+    public tp: TreinoDaoProvider) {
+                this.get();
+                this.searchControl = new FormControl();
                 
   }
 
   ionViewDidLoad() {
-    this.get();
-    this.exerUser();
+    
   }
 
+  openOutro(exer: Exercicio) {
+    this.lp.carregar();
+    this.navCtrl.push(AtividadeGenericaPage, {exer: exer});
+  }
   openExer(exer: Exercicio) {
     this.lp.carregar();
     this.navCtrl.push(AtividadePage, {exer: exer});
@@ -38,40 +51,52 @@ export class ListAtividadePage {
     
     this.exerp.getAll()
     .then((data: Exercicio[]) => {
-      this.exer = data;
+      this.exer.itens = data;  
     })
     .catch((e) =>{
-     this.tp.show('erro');
+     this.toastCtrl.show('erro');
       console.error(e); 
+    });
+
+    this.setFilteredItems();
+    this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
+        this.setFilteredItems();
     });
   }
 
-  exerUser(){
-    let pack_Exc = this.pack_Exc;
-    let exercicios: any[] = [];
-    for (var i = 0; i < pack_Exc.length; i++) {
-      var exercicio = parseInt(pack_Exc[i]);
-      this.exerp.getUser(exercicio)
-      .then((data: Exercicio[]) => {
-        exercicios.push(data);
-      })
-      .catch((e) => {
-        this.tp.show('erro');
-        console.error(e); 
-      });
-    }
-    this.exer = exercicios;
-  }
-
-
   get(){
-    let id = 1;
-    this.clip.get(id)
+    this.stp.get()
     .then((data: any[]) => {
-      if(data[0].pack_Exc != null){
-        let linhas: any[] = [];
-        let pack_Exc = data[0].pack_Exc.split("#");
-        this.pack_Exc = pack_Exc;
+      if(data[0].title != null){
+        let pack_Exc = data[0].title.split("#");
+        let treino: any[] = [];
+        let type = {title: null, exer:[]};
+        for (var i = 0; i < pack_Exc.length; i++) {
+
+          type.title.push(pack_Exc[i]);
+          this.tp.getUser(pack_Exc[i])
+          .then((datat: number) =>{
+            
+            let exercicios: any[] = [];
+            this.exerp.getUser(datat)
+            .then((datae: Exercicio[]) => {
+              exercicios.push(datae);
+            })
+            .catch((e) => {
+              this.toastCtrl.show('erro');
+              console.error(e); 
+            });
+            type.exer = exercicios;
+            
+          })
+          .catch((e) => {
+            console.error(e); 
+          });
+          treino.push(type);
+        }
+        this.exer.itens = treino;
+        console.log(this.exer);
+        
       }else{
         return [];
       }
@@ -80,4 +105,28 @@ export class ListAtividadePage {
       console.error(e); 
     });
   }
+
+  //filtro
+  filterItems(name){
+    return this.exer.itens.filter((item) => {
+        return item.nome.toLowerCase().indexOf(name.toLowerCase()) > -1;
+    });    
+  }
+
+  setFilteredItems() {
+    let filter = this.filterItems(this.name);
+    if (filter.length > 0) {
+      this.exer.itens = filter;
+      this.searching = false;
+    }else{
+      this.toastCtrl.show('item não encontrado');
+      this.searching = false;
+    }
+  }
+
+  onSearchInput(){
+    this.searching = true;
+    this.outros();
+  }
+
 }

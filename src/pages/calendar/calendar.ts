@@ -4,6 +4,8 @@ import * as moment from 'moment';
 
 import { Evento } from '../../providers/evento-local/evento-local';
 import { EventosDaoProvider } from '../../providers/eventos-dao/eventos-dao';
+import { AlertsProvider } from '../../providers/alerts/alerts';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @IonicPage()
 @Component({
@@ -23,9 +25,9 @@ export class CalendarPage {
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, 
-              private alertCtrl: AlertController, public ep: EventosDaoProvider) {
+              private alertCtrl: AlertController, public ep: EventosDaoProvider, public alert: AlertsProvider, private toastCtrl: ToastProvider) {
     moment.locale('pt-br');   
-    // this.get();
+    this.get();
   }
 
   addEvent() {
@@ -33,8 +35,10 @@ export class CalendarPage {
     modal.present();
     modal.onDidDismiss(data => {
       if (data) {
+        this.alert.show(data.startTime, this.converte(data.notification));
         this.ep.insert(data)
         .then((res: any) => {
+          this.toastCtrl.show('Evento salvo');
           this.listar(data);
         })
         .catch((e) => {console.error(e);});
@@ -84,6 +88,7 @@ export class CalendarPage {
         this.ep.update(data)
         .then((res: any) => {
           this.deletar(ev, true);
+          this.toastCtrl.show('Evento editado com sucesso');
           this.listar(data);
         })
         .catch((e) => {console.error(e);});
@@ -92,6 +97,7 @@ export class CalendarPage {
   }
   
   deletar(ev, act: boolean = false){
+    
     var idx = this.eventSource.indexOf(ev, 0);
     if (idx != -1) {
       this.eventSource.splice(idx, 1); 
@@ -100,6 +106,7 @@ export class CalendarPage {
       this.ep.remove(ev.id)
       .then((res: any) => {
         this.listar(null);
+        this.toastCtrl.show('Evento excluído com sucesso');
       })
       .catch((e) => {console.error(e);});
     }
@@ -146,15 +153,20 @@ export class CalendarPage {
   get(){
     this.ep.getAll()
     .then((e: Evento[]) => {
-      console.log(e);
       for (let i = 0; i < e.length; i++) {
-        let ev = { id: e[i].id, title:e[i].title, startTime: new Date(e[i].startTime), endTime: new Date(e[i].endTime), allDay: e[i].allDay, subText: null };
+        let ev = { id: e[i].id, title:e[i].title, startTime: new Date(e[i].startTime), endTime: new Date(e[i].endTime), allDay: e[i].allDay, notification: e[i].notification , subText: null };
         this.eventSource.push(ev);
       }
       console.log(this.eventSource);
+      this.alert.get();
       this.listar(null);
     })
     .catch((e) => {console.error(e);});
   }
   
+  converte(time){
+    let timeParts = time.split(":");
+    let al = (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000);
+    return al;
+  }
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../database/database';
+import { sha3_512 } from 'js-sha3';
+
 import { Cliente } from '../cliente-local/cliente-local';
 import 'rxjs/add/operator/map';
 
@@ -31,7 +33,7 @@ export class ClienteDaoProvider {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
         let sql = 'update Clientes set email = ?, password = ? where id = ?';
-        let data = [cli.email, cli.password, cli.id];
+        let data = [cli.email, sha3_512(cli.password), cli.id];
  
         return db.executeSql(sql, data)
           .then((res: any) =>{

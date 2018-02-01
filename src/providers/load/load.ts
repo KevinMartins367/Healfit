@@ -14,10 +14,10 @@ export class LoadProvider {
         <img src="img/picasion.gif" >
         <a>Aguarde enquanto estamos atualizando as informações</a>
       </div>`,
-      duration: 5000,
       cssClass:``
 
     });
-    return loading.present();
+    return loading;
+    // return loading.present();
   }
 }

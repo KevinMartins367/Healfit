@@ -35,7 +35,7 @@ export class ExercicioDaoProvider {
   public getUser(id: number) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'SELECT id, nome, IMG FROM exercicios where id = ?';
+        let sql = 'SELECT id, nome, IMG FROM exercicios where treino_id = ?';
         let data = [id];
  
         return db.executeSql(sql, data)
@@ -57,12 +57,6 @@ export class ExercicioDaoProvider {
       .then((db: SQLiteObject) => {
         let sql = 'SELECT id, nome, IMG FROM exercicios';
         var data: any[];
-
-        // filtrando pelo nome
-        if (name) {
-          sql += ' and nome like ?'
-          data.push('%' + name + '%');
-        }
  
         return db.executeSql(sql, data)
           .then((data: any) => {

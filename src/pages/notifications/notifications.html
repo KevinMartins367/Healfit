@@ -11,13 +11,26 @@
 
 
 <ion-content padding>
-    <ion-item>
+  <ion-list>
+      <ion-item>
         <ion-label>Horario</ion-label>
         <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="teste"
         cancelText="Cancelar"   
         doneText="Concluir" 
         ></ion-datetime>
       </ion-item>
+    
+      <ion-item>
+        <ion-label>Gaming</ion-label>
+        <ion-select [(ngModel)]="alarme">
+          <ion-option value="0">instante</ion-option>
+          <ion-option value="1000">curto</ion-option>
+          <ion-option value="[2000,1000,2000]">pausado</ion-option>
+          <ion-option value="5000">longo</ion-option>
+        </ion-select>
+      </ion-item>
 
+  </ion-list>
+    
       <button color="bordas" ion-button block round (click)="save()">Concluir</button>
 </ion-content>

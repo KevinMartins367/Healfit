@@ -1,10 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { AlertController, Platform } from 'ionic-angular';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Injectable()
 export class AlertsProvider {
 
-  constructor(public http: Http) {}
+  constructor(private ln: LocalNotifications, public alertCtrl: AlertController, public plt: Platform) {  }
+  
+  public show(h: any, alarme: any){
+    this.ln.schedule({
+      id: 1,
+      title: 'teste',
+      text: 'hora do show',
+      at: new Date( new Date(h).getTime() - alarme),
+      data: { mydata: 'hora do show' }
+    });
+    console.log(new Date( new Date(h).getTime() - alarme));
+    
+  }
 
+  public get(){
+    this.ln.getAll();
+  }
 }

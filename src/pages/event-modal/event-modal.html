@@ -30,6 +30,14 @@
     </ion-item>
  
     <ion-item>
+      <ion-label>alarme</ion-label>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" hourValues="0,1,2" minuteValues="0,1,15,30,45" [(ngModel)]="event.notification"
+      cancelText="Cancelar"   
+      doneText="Concluir" 
+      ></ion-datetime>
+    </ion-item>
+    
+    <ion-item>
       <ion-label>Dia inteiro?</ion-label>
       <ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
     </ion-item>

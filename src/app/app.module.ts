@@ -4,12 +4,14 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { ChartsModule } from 'ng2-charts';
 import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
-import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { SQLite } from '@ionic-native/sqlite';
+import { Toast } from '@ionic-native/toast';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
@@ -25,22 +27,26 @@ import { CalendarPage } from '../pages/calendar/calendar';
 import { InfoPessoalPage } from '../pages/info-pessoal/info-pessoal';
 import { NotificationsPage } from '../pages/notifications/notifications';
 import { SincronizacaoPage } from '../pages/sincronizacao/sincronizacao';
-import { ImcPage } from '../pages/imc/imc';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TokenProvider } from '../providers/token/token';
 import { DatabaseProvider } from '../providers/database/database';
-import { ExercicioProvider } from '../providers/exercicio/exercicio';
-import { ClienteProvider } from '../providers/cliente/cliente';
+import { NotificationProvider } from '../providers/notification/notification';
 import { ToastProvider } from '../providers/toast/toast';
 import { LoadProvider } from '../providers/load/load';
 import { AlertsProvider } from '../providers/alerts/alerts';
+
+import { ExercicioProvider } from '../providers/exercicio/exercicio';
+import { ClienteProvider } from '../providers/cliente/cliente';
 import { ExercicioDaoProvider } from '../providers/exercicio-dao/exercicio-dao';
 import { ClienteDaoProvider } from '../providers/cliente-dao/cliente-dao';
 import { EventosDaoProvider } from '../providers/eventos-dao/eventos-dao';
 import { PesoDaoProvider } from '../providers/peso-dao/peso-dao';
+import { TreinoDaoProvider } from '../providers/treino-dao/treino-dao';
+import { SeutreinoDaoProvider } from '../providers/seutreino-dao/seutreino-dao';
 
+registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
   declarations: [
@@ -58,7 +64,6 @@ import { PesoDaoProvider } from '../providers/peso-dao/peso-dao';
     InfoPessoalPage,
     NotificationsPage,
     SincronizacaoPage,
-    ImcPage,
     CalendarPage
   ],
   imports: [
@@ -68,7 +73,8 @@ import { PesoDaoProvider } from '../providers/peso-dao/peso-dao';
     ChartsModule,
     IonicModule.forRoot(MyApp, {
       monthShortNames:["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", 'Jul', 'Ago', 'Set', 'Out', 'Nov', "Dez"]
-    })
+    }),
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -86,7 +92,6 @@ import { PesoDaoProvider } from '../providers/peso-dao/peso-dao';
     InfoPessoalPage,
     NotificationsPage,
     SincronizacaoPage,
-    ImcPage,
     CalendarPage
   ],
   providers: [
@@ -95,8 +100,8 @@ import { PesoDaoProvider } from '../providers/peso-dao/peso-dao';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: LOCALE_ID, useValue: 'pt-Br' },
     SQLite,
+    Toast,
     LocalNotifications,
-    PhonegapLocalNotification,
     TokenProvider,
     DatabaseProvider,
     ExercicioProvider,
@@ -108,6 +113,9 @@ import { PesoDaoProvider } from '../providers/peso-dao/peso-dao';
     ClienteDaoProvider,
     EventosDaoProvider,
     PesoDaoProvider,
+    NotificationProvider,
+    TreinoDaoProvider,
+    SeutreinoDaoProvider,
   ]
 })
 export class AppModule {}

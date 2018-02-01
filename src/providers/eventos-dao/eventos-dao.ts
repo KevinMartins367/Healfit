@@ -25,8 +25,8 @@ export class EventosDaoProvider {
   public update(ev: Evento) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'update eventos set title = ?, startTime = ?, endTime = ?, allDay = ? where id = ?';
-        let data = [ev.title, ev.startTime, ev.endTime, ev.allDay ? 1 : 0, ev.id];
+        let sql = 'update eventos set title = ?, startTime = ?, endTime = ?, allDay = ?, notification = ? where id = ?';
+        let data = [ev.title, ev.startTime, ev.endTime, ev.allDay ? 1 : 0, ev.notification, ev.id];
  
         return db.executeSql(sql, data)
           .then((data: any) => {return true;})
@@ -38,7 +38,7 @@ export class EventosDaoProvider {
   public getAll() {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'SELECT id, title, startTime, endTime, allDay FROM eventos';
+        let sql = 'SELECT id, title, startTime, endTime, allDay, notification FROM eventos';
         var data: any[];
 
         return db.executeSql(sql, data)
