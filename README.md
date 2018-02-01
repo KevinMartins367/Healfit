@@ -1,4 +1,4 @@
-echo "# Healfit"
+# Healfit
 
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
