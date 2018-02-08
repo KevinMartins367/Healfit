@@ -32,19 +32,23 @@ export class ExercicioDaoProvider {
       .catch((e) => console.error(e));
   }
   
-  public getUser(id: number) {
+  public getUser(treino_id: number, intensity: number) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'SELECT id, nome, IMG FROM exercicios where treino_id = ?';
-        let data = [id];
+        let sql = 'SELECT id, nome, IMG FROM exercicios where treino_id = ? and intensity=?';
+        let data = [treino_id, intensity];
  
         return db.executeSql(sql, data)
           .then((data: any) => {
             if (data.rows.length > 0) {
-              let exercicio = data.rows.item(0);
-              return exercicio;
+              let exercicios: any[] = [];
+              for (var i = 0; i < data.rows.length; i++) {
+                var exercicio = data.rows.item(i);
+                exercicios.push(exercicio);
+              }              
+              return exercicios;
             } else {
-              return null;
+              return [];
             }
           })
           .catch((e) => console.error(e));
@@ -52,11 +56,11 @@ export class ExercicioDaoProvider {
       .catch((e) => console.error(e));
   }
  
-  public getAll(name: string = null) {
+  public getAll(treino_id: number) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'SELECT id, nome, IMG FROM exercicios';
-        var data: any[];
+        let sql = 'SELECT id, nome, IMG FROM exercicios where treino_id = ?';
+        var data = [treino_id];
  
         return db.executeSql(sql, data)
           .then((data: any) => {

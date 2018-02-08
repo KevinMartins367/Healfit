@@ -40,31 +40,31 @@
             <td><b>Valor</b></td>
             <td><b>Resultado</b></td>
           </tr>
-          <tr>
+          <tr [ngClass]="{bordas: (imc < 17)}">
             <td>Abaixo de 17</td>
             <td>Muito abaixo do peso</td>
           </tr>
-          <tr>
+          <tr [ngClass]="{bordas: (17.00 < imc < 18.49)}">
             <td>Entre 17 e 18,49</td>
             <td>Abaixo do peso</td>
           </tr>
-          <tr>
+          <tr [ngClass]="{bordas: (18.5 < imc < 24.99)}">
             <td>Entre 18,5 e 24,99</td>
             <td>Peso normal</td>
           </tr>
-          <tr>
+          <tr [ngClass]="{bordas: (25.00 < imc < 29.99)}">
             <td>Entre 25 e 29,99</td>
             <td>Acima do peso</td>
           </tr>
-          <tr>
+          <tr [ngClass]="{bordas: (30.00 < imc < 34.99)}">
             <td>Entre 30 e 34,99</td>
             <td>Obesidade I</td>
           </tr>
-          <tr>
+          <tr [ngClass]="{bordas: (35.00 < imc < 39.99)}">
             <td>Entre 35 e 39,99</td>
             <td>Obesidade II (severa)</td>
           </tr>
-          <tr>
+          <tr [ngClass]="{bordas: (40.00 < imc)}">
             <td>Acima de 40</td>
             <td>Obesidade III (mórbida)</td>
           </tr>

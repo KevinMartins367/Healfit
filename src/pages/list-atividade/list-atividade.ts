@@ -20,7 +20,7 @@ import { TreinoDaoProvider } from '../../providers/treino-dao/treino-dao';
 })
 export class ListAtividadePage {
 
-  exer = {itens: []};
+  exer: any = [];
   searchControl: FormControl;
   name:  string = '';
   categories: string = 'treino';
@@ -48,15 +48,31 @@ export class ListAtividadePage {
   }
 
   outros(){
-    
-    this.exerp.getAll()
-    .then((data: Exercicio[]) => {
-      this.exer.itens = data;  
-    })
-    .catch((e) =>{
-     this.toastCtrl.show('erro');
-      console.error(e); 
-    });
+    let treino: any[] = [];
+    this.tp.getAll()
+      .then((datat: any) =>{
+        console.log(datat);
+        for (let t = 0; t < datat.length; t++) {
+          let element = datat[t].type;
+          let type = {title: 'Treino '+element , exer: []};
+
+          this.exerp.getAll(datat[t].id)
+          .then((datae: Exercicio[]) => {
+            type.exer = datae;
+          })
+          .catch((e) => {
+            this.toastCtrl.show('erro');
+            console.error(e); 
+          }); 
+          treino.push(type);  
+        }
+        this.exer = treino;
+        console.log(this.exer);
+      })
+      .catch((e) => {
+        console.error(e); 
+      });
+
 
     this.setFilteredItems();
     this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
@@ -67,34 +83,34 @@ export class ListAtividadePage {
   get(){
     this.stp.get()
     .then((data: any[]) => {
+      console.log(data);
+      
       if(data[0].title != null){
         let pack_Exc = data[0].title.split("#");
         let treino: any[] = [];
-        let type = {title: null, exer:[]};
+        
         for (var i = 0; i < pack_Exc.length; i++) {
 
-          type.title.push(pack_Exc[i]);
+          let type = {title: null, exer: []};
+          type.title  = 'Treino '+pack_Exc[i];
           this.tp.getUser(pack_Exc[i])
-          .then((datat: number) =>{
+          .then((datat: any) =>{
             
-            let exercicios: any[] = [];
-            this.exerp.getUser(datat)
+            this.exerp.getUser(datat.id, data[0].intensity)
             .then((datae: Exercicio[]) => {
-              exercicios.push(datae);
+              type.exer = datae;
             })
             .catch((e) => {
               this.toastCtrl.show('erro');
               console.error(e); 
             });
-            type.exer = exercicios;
-            
           })
           .catch((e) => {
             console.error(e); 
           });
-          treino.push(type);
+          treino.push(type);  
         }
-        this.exer.itens = treino;
+        this.exer = treino;
         console.log(this.exer);
         
       }else{
@@ -108,7 +124,7 @@ export class ListAtividadePage {
 
   //filtro
   filterItems(name){
-    return this.exer.itens.filter((item) => {
+    return this.exer.exer.filter((item) => {
         return item.nome.toLowerCase().indexOf(name.toLowerCase()) > -1;
     });    
   }
@@ -116,7 +132,7 @@ export class ListAtividadePage {
   setFilteredItems() {
     let filter = this.filterItems(this.name);
     if (filter.length > 0) {
-      this.exer.itens = filter;
+      this.exer.exer = filter;
       this.searching = false;
     }else{
       this.toastCtrl.show('item não encontrado');
@@ -128,5 +144,6 @@ export class ListAtividadePage {
     this.searching = true;
     this.outros();
   }
+
 
 }

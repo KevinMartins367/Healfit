@@ -16,7 +16,9 @@ import { ToastProvider } from '../../providers/toast/toast';
 })
 export class EstatisticaPage {
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  @ViewChild(BaseChartDirective) 
+  
+  chart: BaseChartDirective;
   cli: Cliente[];
   imc: string;
   selectedDay = new Date();
@@ -52,13 +54,6 @@ export class EstatisticaPage {
         subTitle: 'data: ' + this.lineChartLabels[e.active[0]._index] + '<br><br>Altura: ' + this.cli[0].altura,
         buttons:  [ 
           {
-            text: 'Cancelar',
-            role: 'cancel',
-            handler: data => {
-              console.log('Cancel clicked');
-            }
-          },
-          {
               text: "Editar",
               handler: data => {
               this.select = false;
@@ -73,6 +68,13 @@ export class EstatisticaPage {
                 this.select = true;
                 this.deletar(this.ids[e.active[0]._index]-1);
               }
+          },
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
           }]
       })
       alert.present();
@@ -200,10 +202,12 @@ export class EstatisticaPage {
             let p = new Peso(
               id,
               data.peso,
-              this.lineChartLabels[id],
+              this.lineChartLabels[id+1],
               data.meta,
               1
             );
+            console.log(p);
+            
             this.pp.update(p)
             .then((res: any) => {
               this.deletar(id, true);
@@ -253,4 +257,5 @@ export class EstatisticaPage {
       this.chart.chart.update();
     }
   }
+
 }

@@ -15,36 +15,42 @@
   </ion-segment>
   <div [ngSwitch]="categories">
       <ion-list *ngSwitchCase="'treino'" >
-        <!-- <div *ngIf="exer != null; then thenBlock else elseBlock"></div>
+        <div *ngIf="exer != null; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
-          <button ion-item *ngFor="let exc of exer" name="BtnExer" (click)="openExer(exc)">
-            <ion-avatar item-start>
-              <img src="{{exc.IMG}}">
-            </ion-avatar>
-            <ion-label>
-                <h2>{{exc.nome}}</h2>
-            </ion-label>
-          </button>
+          <ion-item-group *ngFor="let item of exer">
+            <ion-item-divider color="bordas">{{item.title}}</ion-item-divider>
+            <ion-item *ngFor="let exc of item.exer" (click)="openExer(exc)">
+              <ion-avatar item-start>
+                  <img src="{{exc.IMG}}">
+                </ion-avatar>
+                <ion-label>
+                    <h2>{{exc.nome}}</h2>
+                </ion-label>
+            </ion-item>
+          </ion-item-group>
         </ng-template>
         <ng-template #elseBlock>
             <label text-center>
                 <h3>Não há exercicios catalogados</h3>
             </label>
-        </ng-template> -->
+        </ng-template>
       </ion-list>
       
       <ion-list *ngSwitchCase="'outro'" >
         <ion-searchbar [(ngModel)]="name" [formControl]="searchControl" (ionInput)="onSearchInput()" (ionCancel)="outros()"></ion-searchbar>
         <div *ngIf="exer != null; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
-          <button ion-item *ngFor="let exc of exer" name="BtnExer" (click)="openOutro(exc)">
-            <ion-avatar item-start>
-              <img src="{{exc.IMG}}">
-            </ion-avatar>
-            <ion-label>
-                <h2>{{exc.nome}}</h2>
-            </ion-label>
-          </button>
+          <ion-item-group *ngFor="let item of exer">
+            <ion-item-divider color="bordas">{{item.title}}</ion-item-divider>
+            <ion-item *ngFor="let exc of item.exer" (click)="openOutro(exc)">
+              <ion-avatar item-start>
+                  <img src="{{exc.IMG}}">
+                </ion-avatar>
+                <ion-label>
+                    <h2>{{exc.nome}}</h2>
+                </ion-label>
+            </ion-item>
+          </ion-item-group>
         </ng-template>
         <ng-template #elseBlock>
             <label text-center>

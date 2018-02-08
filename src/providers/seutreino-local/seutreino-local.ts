@@ -4,6 +4,7 @@ export class Seutreino {
               public title: string,
               public startTime: string,
               public endTime: string,
-              public intensity: number) {  }
+              public Object: string,
+              public intensity: string) {  }
 
 }

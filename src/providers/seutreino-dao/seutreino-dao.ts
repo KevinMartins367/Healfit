@@ -12,16 +12,16 @@ export class SeutreinoDaoProvider {
       .then((db: SQLiteObject) => {
         let sql = 'select * from seutreinos where id = (SELECT MAX(id)  FROM seutreinos)';
         let data = [];
- 
+
         return db.executeSql(sql, data)
           .then((data: any) => {
             if (data.rows.length > 0) {
-              let exercicios: any[] = [];
+              let seutreinos: any[] = [];
               for (var i = 0; i < data.rows.length; i++) {
-                var exercicio = data.rows.item(i);
-                exercicios.push(exercicio);
+                var seutreino = data.rows.item(i);
+                seutreinos.push(seutreino);
               }              
-              return exercicios;
+              return seutreinos;
             } else {
               return [];
             }

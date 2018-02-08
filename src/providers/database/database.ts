@@ -34,7 +34,7 @@ export class DatabaseProvider {
     db.sqlBatch([
       ['CREATE TABLE IF NOT EXISTS clientes (id integer primary key AUTOINCREMENT NOT NULL, email TEXT, password TEXT, altura REAL(3,2), user_id integer, pessoa_id integer, api_token TEXT)'],
       ['CREATE TABLE IF NOT EXISTS treinos (id integer primary key AUTOINCREMENT NOT NULL, type TEXT)'],
-      ['CREATE TABLE IF NOT EXISTS seutreinos (id integer primary key AUTOINCREMENT NOT NULL, title TEXT, startTime TEXT, endTime TEXT, intensity integer)'],
+      ['CREATE TABLE IF NOT EXISTS seutreinos (id integer primary key AUTOINCREMENT NOT NULL, title TEXT, startTime TEXT, endTime TEXT, Object TEXT, intensity integer)'],
       ['CREATE TABLE IF NOT EXISTS exercicios (id integer primary key AUTOINCREMENT NOT NULL, nome TEXT, IMG TEXT, descricao TEXT, periodo TEXT, duracao TEXT, link TEXT, user_id integer, intensity integer, treino_id integer, FOREIGN KEY(treino_id) REFERENCES treinos(id))'],
       ['CREATE TABLE IF NOT EXISTS eventos (id integer primary key AUTOINCREMENT NOT NULL, title TEXT, startTime TEXT, endTime TEXT, allDay integer, notification TEXT)'],
       ['CREATE TABLE IF NOT EXISTS pesos (id integer primary key AUTOINCREMENT NOT NULL, atual REAL(5,2), data TEXT, meta REAL(5,2), cliente_id integer, FOREIGN KEY(cliente_id) REFERENCES clientes(id))'],
@@ -90,8 +90,8 @@ export class DatabaseProvider {
   
         // Criando as tabelas
         db.sqlBatch([
-          ['insert into seutreinos (title, startTime, endTime, intensity) values (?,?,?,?)', 
-          ['A#B#C', '04/01/2018', '04/03/2018', '1']]
+          ['insert into seutreinos (title, startTime, endTime, Object, intensity) values (?,?,?,?,?)', 
+          ['A#B#C', '04/01/2018', '04/03/2018', 'Hipertrofia', '1']]
         ])
         .then(() => console.log('Dados padrões seutreinos incluídos '))
         .catch(e => console.error('Erro ao incluir dados padrões 5', e));
@@ -107,19 +107,19 @@ export class DatabaseProvider {
         // Criando as tabelas
         db.sqlBatch([
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)', 
-          ['corda','http://localhost:8000/imagens/source.gif','0', '1', '120', '0', '1', '1', '1']],
+          ['corda','http://localhost:8000/imagens/source.gif','0', '1', '120', '0', '1', '1', '2']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',  
           ['corrida','http://localhost:8000/imagens/','0', '1', '1800', '0', '1', '1', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
-          ['Jab','http://localhost:8000/imagens/','Soco aplicado com o punho que está à frente da posição de guarda, geralmente usado para distrair o oponente, tomar distância ou abrir a guarda para desferir golpes mais potentes', '2', '120', '0', '1', '1', '1']],
+          ['Jab','http://localhost:8000/imagens/','Soco aplicado com o punho que está à frente da posição de guarda, geralmente usado para distrair o oponente, tomar distância ou abrir a guarda para desferir golpes mais potentes', '2', '120', '0', '1', '2', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
-          ['tip','http://localhost:8000/imagens/','É o chute frontal com a perna que está à frente, geralmente usado para distanciar ou empurrar o oponente porém, se bem aplicado, pode também causar dor', '2', '120', '0', '1', '1', '1']],
+          ['tip','http://localhost:8000/imagens/','É o chute frontal com a perna que está à frente, geralmente usado para distanciar ou empurrar o oponente porém, se bem aplicado, pode também causar dor', '2', '120', '0', '1', '2', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
-          ['Chute lateral','http://localhost:8000/imagens/','Como o próprio nome já diz, o este chute virá das laterais, podendo atingir tanto as pernas, como região abdominal e cabeça', '2', '120', '0', '1', '1', '1']],
+          ['Chute lateral','http://localhost:8000/imagens/','Como o próprio nome já diz, o este chute virá das laterais, podendo atingir tanto as pernas, como região abdominal e cabeça', '2', '120', '0', '1', '2', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
-          ['Joelhada','http://localhost:8000/imagens/','A joelhada é outro golpe típico do Muay Thai e também extremamente poderoso, podendo causar sérias lesões se bem aplicados', '2', '120', '0', '1', '1', '1']],
+          ['Joelhada','http://localhost:8000/imagens/','A joelhada é outro golpe típico do Muay Thai e também extremamente poderoso, podendo causar sérias lesões se bem aplicados', '2', '120', '0', '1', '2', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
-          ['Cotovelada','http://localhost:8000/imagens/','É um golpe em que se atinge o oponente com seus cotovelos e ela pode ser aplicada de forma lateral ou de forma frontal, geralmente atingindo o queixo ou nariz do oponente', '2', '120', '0', '1', '1', '1']],
+          ['Cotovelada','http://localhost:8000/imagens/','É um golpe em que se atinge o oponente com seus cotovelos e ela pode ser aplicada de forma lateral ou de forma frontal, geralmente atingindo o queixo ou nariz do oponente', '2', '120', '0', '1', '2', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
           ['abdominal','http://localhost:8000/imagens/','0', '2', '60', '0', '1', '1', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
@@ -127,13 +127,13 @@ export class DatabaseProvider {
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
           ['flexão','http://localhost:8000/imagens/','0', '2', '120', '0', '1', '1', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
-          ['Cruzado','http://localhost:8000/imagens/','O cruzado é um soco aplicado com ambos os braços, então podendo ser cruzado direito ou cruzado esquerdo. É desferido de forma que o punho faça uma rota circular até atingir o oponente, podendo atingir tanto cabeça quanto costelas', '2', '120', '0', '1', '1', '1']],
+          ['Cruzado','http://localhost:8000/imagens/','O cruzado é um soco aplicado com ambos os braços, então podendo ser cruzado direito ou cruzado esquerdo. É desferido de forma que o punho faça uma rota circular até atingir o oponente, podendo atingir tanto cabeça quanto costelas', '2', '120', '0', '1', '2', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
-          ['Upper','http://localhost:8000/imagens/','Também conhecido no Brasil como “gancho”, o Upper é aplicado de baixo para cima, geralmente atingindo o queixo do oponente', '2', '120', '0', '1', '1', '1']],
+          ['Upper','http://localhost:8000/imagens/','Também conhecido no Brasil como “gancho”, o Upper é aplicado de baixo para cima, geralmente atingindo o queixo do oponente', '2', '120', '0', '1', '2', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
-          ['ThaiTip','http://localhost:8000/imagens/','É o chute frontal aplicado com a perna que está atrás, este aplicado com a intenção de atingir o adversário com maior agressividade', '2', '120', '0', '1', '1', '1']],
+          ['ThaiTip','http://localhost:8000/imagens/','É o chute frontal aplicado com a perna que está atrás, este aplicado com a intenção de atingir o adversário com maior agressividade', '2', '120', '0', '1', '2', '1']],
           ['insert into exercicios (nome, IMG, descricao, periodo, duracao, link, user_id, intensity, treino_id) values (?,?,?,?,?,?,?,?,?)',   
-          ['Direto','http://localhost:8000/imagens/','Soco aplicado com o punho que está atrás, na posição de guarda. É um golpe mais agressivo e pode facilmente ferir ou levar o oponente a nocaute', '2', '120', '0', '1', '1', '1']]
+          ['Direto','http://localhost:8000/imagens/','Soco aplicado com o punho que está atrás, na posição de guarda. É um golpe mais agressivo e pode facilmente ferir ou levar o oponente a nocaute', '2', '120', '0', '1', '2', '1']]
         ])
           .then(() => console.log('Dados padrões incluídos'))
           .catch(e => console.error('Erro ao incluir dados padrões', e));

@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { Vibration } from '@ionic-native/vibration';
 
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
@@ -116,6 +117,7 @@ registerLocaleData(localePt, 'pt-BR');
     NotificationProvider,
     TreinoDaoProvider,
     SeutreinoDaoProvider,
+    Vibration
   ]
 })
 export class AppModule {}

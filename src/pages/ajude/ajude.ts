@@ -16,6 +16,8 @@ export class AjudePage {
     let localData = http.get('assets/ajuda.json').map(res => res.json().items);
     localData.subscribe(data => {
       this.information = data;
+      console.log(this.information);
+      
     });
     
   }  

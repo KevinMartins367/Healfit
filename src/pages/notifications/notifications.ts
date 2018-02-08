@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertsProvider } from '../../providers/alerts/alerts';
 import { Vibration } from '@ionic-native/vibration';
-import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -21,14 +20,9 @@ export class NotificationsPage {
 
   save(){
 
-    console.log(this.converte(this.teste));
+    console.log(this.alarme);
     // this.alert.show(this.teste, a);
     this.vibration.vibrate(this.alarme);
   }
   
-  converte(time){
-    let timeParts = time.split(":");
-    let al = (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000);
-    return al;
-  }
 }

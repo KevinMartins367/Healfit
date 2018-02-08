@@ -2,11 +2,20 @@
 
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
-## How to use this template
+## template
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
-
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+![](img/Screenshot_1518109769.png)
+![](img/Screenshot_1518109777.png)
+![](img/Screenshot_1518109784.png)
+![](img/Screenshot_1518109791.png)
+![](img/Screenshot_1518109828.png)
+![](img/Screenshot_1518109840.png)
+![](img/Screenshot_1518109893.png)
+![](img/Screenshot_1518109899.png)
+![](img/Screenshot_1518109917.png)
+![](img/Screenshot_1518109919.png)
+![](img/Screenshot_1518109925.png)
+![](img/Screenshot_1518109931.png)
 
 ### With the Ionic CLI:
 
